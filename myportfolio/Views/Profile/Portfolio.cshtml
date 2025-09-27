@@ -1,0 +1,21 @@
+@{
+    ViewData["Title"] = "Portfolio";
+}
+<section class="container py-5">
+    <h1 class="section-title">Portfolio</h1>
+    <div class="row g-4">
+        @for (var i = 0; i < 6; i++)
+        {
+            <div class="col-sm-6 col-lg-4">
+                <div class="card card-portfolio h-100 shadow-sm">
+                    <img class="card-img-top" src="https://picsum.photos/seed/@i/600/400" alt="Project @i" />
+                    <div class="card-body">
+                        <h5 class="card-title">Project @i</h5>
+                        <p class="card-text">Short description of the project and tech stack.</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
