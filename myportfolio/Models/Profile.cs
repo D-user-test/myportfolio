@@ -17,7 +17,7 @@ namespace myportfolio.Models
 
 
 
-        public async Task<bool> ProcessedEmail(string name, string mesg, string sub, string email,string servemail)
+        public async Task<bool> ProcessedEmail(string name, string mesg, string sub, string email,string servemail,string pword)
         {
             try
             {
@@ -34,16 +34,14 @@ namespace myportfolio.Models
                 msg = msg + "<p>Best Regards</p>";
            
                
-                var emailid = Environment.GetEnvironmentVariable("EMAIL_ID");
-                var pword = Environment.GetEnvironmentVariable("EMAIL_PASSWORD");
-
+               
                 SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
                 smtpClient.Port = 587;
                 smtpClient.EnableSsl = true;
                 smtpClient.Credentials = new NetworkCredential(servemail, pword);
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = new MailAddress(servemail);
-                mailMessage.To.Add(emailid);
+                mailMessage.To.Add(servemail);
              
                 mailMessage.IsBodyHtml = true;
                 mailMessage.Subject = "New Portfolio Response";
@@ -58,8 +56,8 @@ namespace myportfolio.Models
 
             catch (Exception ex)
             {
-                return false;
-
+                System.Diagnostics.Debug.WriteLine($"Email sending failed: {ex.Message}");
+                throw; // or log to a file/service
             }
         }
     }

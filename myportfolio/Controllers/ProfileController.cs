@@ -131,15 +131,12 @@ namespace myportfolio.Controllers
             {
                 string pattern = @"^(?("")(""[^""]+?""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|G:\w])*)(?<=[0-9a-z])@))" +
                                 @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9]{2,17}))$";
-                bool isMatch = Regex.IsMatch(servemail, pattern);
-                
-                if (isMatch)
-                {
+               
                     try
                     {
                        
                       
-                        emailSent =await pf.ProcessedEmail(name, msg, sub, email, servemail);
+                        emailSent =await pf.ProcessedEmail(name, msg, sub, email, servemail, pass);
                         if (emailSent) {
 
                             var fromProcess = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Process);
@@ -155,7 +152,7 @@ namespace myportfolio.Controllers
                         
                         return Json(new { fromProcess = fromProcess, servemail = servemail, password = pass });
                     }
-                }
+                
 
             }
 
