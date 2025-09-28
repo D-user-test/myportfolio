@@ -26,7 +26,7 @@ namespace myportfolio.Models
 
 
 
-        public async Task<bool> ProcessedEmail(string name, string mesg, string sub, string email,string fromEmail,string toEmail,string apikey)
+        public async Task<bool> ProcessedEmail(string name, string mesg, string sub, string email,string fromEmail,string toEmail,string apiKey)
         {
             try
             {
