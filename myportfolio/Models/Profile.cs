@@ -46,8 +46,9 @@ namespace myportfolio.Models
                 mailMessage.IsBodyHtml = true;
                 mailMessage.Subject = "New Portfolio Response";
                 mailMessage.Body = msg;
-             
-                await smtpClient.SendMailAsync(mailMessage);
+                smtpClient.Timeout = 20000;
+                await smtpClient.SendMailAsync(mailMessage).ConfigureAwait(false);
+                //await smtpClient.SendMailAsync(mailMessage);
                
                 mailMessage.Dispose();
 
