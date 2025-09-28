@@ -73,25 +73,16 @@ function sendDataToContact() {
         data: { name: name, msg: msg, sub: sub, email: email },
         success: function (response) {
            
-            if (response == true) {
-                setTimeout(() => {
-                    // After success, reset button
-                    btn.disabled = false;
-                    btn.innerHTML = "Send";
-                    document.getElementById("modalMessage").innerText ="Thank you for contacting us..";
-                    alertDiv.classList.remove("d-none");
-                    form.reset();
-                }, 2000);
-            } else {
-                setTimeout(() => {
-                    // After success, reset button
-                    btn.disabled = false;
-                    btn.innerHTML = "Send";
-                    document.getElementById("modalMessage").innerText =  "Failed to send Email..";
-                    alertDiv.classList.remove("d-none");
-                form.reset();
-                }, 2000);
-            }
+          
+        setTimeout(() => {
+            // After success, reset button
+            btn.disabled = false;
+            btn.innerHTML = "Send";
+            document.getElementById("modalMessage").innerText ="Thank you for contacting us..";
+            alertDiv.classList.remove("d-none");
+            form.reset();
+        }, 2000);
+            
         },
         error: function () {
             alert("Error while sending mail.");
