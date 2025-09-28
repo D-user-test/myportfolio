@@ -17,7 +17,7 @@ namespace myportfolio.Models
 
 
 
-        public async Task<bool> ProcessedEmail(string name, string mesg, string sub, string email,string servemail,string pword)
+        public bool ProcessedEmail(string name, string mesg, string sub, string email,string servemail,string pword)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace myportfolio.Models
                 mailMessage.Subject = "New Portfolio Response";
                 mailMessage.Body = msg;
              
-                await smtpClient.SendMailAsync(mailMessage);
+                smtpClient.SendMailAsync(mailMessage);
                
                 mailMessage.Dispose();
 

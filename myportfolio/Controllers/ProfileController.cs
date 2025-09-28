@@ -119,7 +119,7 @@ namespace myportfolio.Controllers
 
        
         [HttpPost]
-        public async Task<IActionResult> Contact(string name,string msg,string sub,string email)
+        public IActionResult Contact(string name,string msg,string sub,string email)
         {
            
             Profile pf=new Profile();
@@ -136,7 +136,7 @@ namespace myportfolio.Controllers
                     {
                        
                       
-                        emailSent =await pf.ProcessedEmail(name, msg, sub, email, servemail, pass);
+                        emailSent = pf.ProcessedEmail(name, msg, sub, email, servemail, pass);
                         if (emailSent) {
 
                             var fromProcess = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Process);
