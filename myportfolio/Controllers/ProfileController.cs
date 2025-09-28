@@ -9,108 +9,8 @@ namespace myportfolio.Controllers
     
     public class ProfileController : Controller
     {
-        //private readonly IProfileRepository _repo;
+       
 
-        //public ProfileController(IProfileRepository repo)
-        //{
-        //    _repo = repo;
-        //}
-
-
-        //[HttpGet]
-        //public IActionResult profile()
-        //{
-        //    try
-        //    {
-        //        HttpContext.Session.SetString("username", "user");
-        //        var val = _repo.GetAll();
-
-        //        return View(val);
-        //    }
-        //    catch (Exception ex)
-        //    {
-              
-        //        return View(ex);
-        //    }
-          
-        //}
-
-        //[HttpGet]
-        //public IActionResult Create() {
-
-        //    try
-        //    {
-        //        return View();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return View(ex);
-        //    }
-
-        //} 
-
-        //[HttpPost]
-        //public IActionResult Create(Profile profile)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            _repo.Create(profile);
-        //            return RedirectToAction("Index");
-        //        }
-        //        return View(profile); ;
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        return View(ex);
-        //    }
-            
-        //}
-
-        //[HttpGet]
-        //public IActionResult Edit(int id) {
-        //    try
-        //    {
-        //        return View(_repo.GetById(id));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return View(ex);
-        //    }
-           
-        //}
-
-        //[HttpPost]
-        //public IActionResult Edit(Profile profile)
-        //{
-        //    try
-        //    {
-        //        _repo.Update(profile);
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return View(ex);
-        //    }
-            
-        //}
-
-        //[HttpGet]
-        //public IActionResult Delete(int id)
-        //{
-        //    try
-        //    {
-        //        _repo.Delete(id);
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return View(ex);
-        //    }
-           
-        //}
         [HttpGet]
         public IActionResult Index()
         {
@@ -135,19 +35,25 @@ namespace myportfolio.Controllers
                 {
                     try
                     {
-                       
-                      
-                        emailSent =await pf.ProcessedEmail(name, msg, sub, email, servemail);
-                        if (emailSent) { 
                         
-                            return Json(true);
+                         
+                        emailSent =await pf.ProcessedEmail(name, msg, sub, email, servemail);
+                        if (emailSent) {
+                            var fromProcess = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Process);
+                            var fromUser = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.User);
+                            var fromMachine = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Machine);
+                            return Json(new { fromProcess = fromProcess, fromUser = fromUser, fromMachine = fromMachine, servemail = servemail });
                         }
                           
                     }
                     
                     catch (Exception e)
                     {
-                        return Json(false);
+                        
+                        var fromProcess = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Process);
+                        var fromUser = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.User);
+                        var fromMachine = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Machine);
+                        return Json(new { fromProcess = fromProcess , fromUser = fromUser , fromMachine = fromMachine,servemail=servemail });
                     }
                 }
 
