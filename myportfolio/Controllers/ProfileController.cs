@@ -128,8 +128,11 @@ namespace myportfolio.Controllers
         [HttpPost]
         public async Task<IActionResult> Contact(string name,string msg,string sub,string email)
         {
+            var fromEmail = Environment.GetEnvironmentVariable("SENDGRID_FROM_EMAIL");
+            var toEmail = Environment.GetEnvironmentVariable("SENDGRID_TO_EMAIL");
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
 
-            var sent = await _profile.ProcessedEmail(name, msg, sub, email);
+            var sent = await _profile.ProcessedEmail(name, msg, sub, email, fromEmail,toEmail,apiKey);
             return sent ? Ok("Sent!") : StatusCode(500, "Failed to send email");
         }
     }

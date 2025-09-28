@@ -26,14 +26,12 @@ namespace myportfolio.Models
 
 
 
-        public async Task<bool> ProcessedEmail(string name, string mesg, string sub, string email)
+        public async Task<bool> ProcessedEmail(string name, string mesg, string sub, string email,string fromEmail,string toEmail,string apikey)
         {
             try
             {
-                var fromEmail = _config["SENDGRID_FROM_EMAIL"];
-                var toEmail = _config["SENDGRID_TO_EMAIL"];
-                var apiKey = _config["SENDGRID_API_KEY"];
-
+               
+                
                 var sb = new StringBuilder();
                 sb.Append("<p>Dear,</p>");
                 sb.Append("<p>You have received a new response from your Portfolio.</p><br />");
