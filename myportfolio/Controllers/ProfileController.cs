@@ -119,7 +119,7 @@ namespace myportfolio.Controllers
 
        
         [HttpPost]
-        public IActionResult Contact(string name,string msg,string sub,string email)
+        public async Task<IActionResult> Contact(string name,string msg,string sub,string email)
         {
            
             Profile pf=new Profile();
@@ -136,10 +136,9 @@ namespace myportfolio.Controllers
                     {
                        
                       
-                        emailSent = pf.ProcessedEmail(name, msg, sub, email, servemail, pass);
+                        emailSent =await pf.ProcessedEmail(name, msg, sub, email, servemail, pass);
                         if (emailSent) {
 
-                           
                             return Json(emailSent);
                         }
                           
@@ -147,7 +146,6 @@ namespace myportfolio.Controllers
                     
                     catch (Exception e)
                     {
-                        
                         return Json(false);
                     }
                 
