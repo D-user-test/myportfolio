@@ -19,7 +19,7 @@ namespace myportfolio.Models
 
         private readonly IConfiguration _config;
 
-        public Profile(IConfiguration config)
+        public Profile(IConfiguration config)   // <-- requires config
         {
             _config = config;
         }

@@ -34,66 +34,7 @@ namespace myportfolio.Services.ProfileS
         //    }
         //    return profiles;
         //}
-        public List<Profile> GetAll()
-        {
-            var profiles = new List<Profile>
-        {
-            new Profile
-            {
-                Id = 1,
-                FullName = "Aarav Mehta",
-                JobRole = "Full Stack Developer",
-                Experience = "5 years",
-                Bio = "Passionate about building scalable web applications with clean architecture.",
-                ProfileImageUrl = "../images/img1.png"
-            },
-            new Profile
-            {
-                Id = 2,
-                FullName = "Sneha Reddy",
-                JobRole = "UI/UX Designer",
-                Experience = "3 years",
-                Bio = "Creative designer focused on intuitive user experiences and responsive layouts.",
-                ProfileImageUrl = "../images/img2.jpg"
-            },
-            new Profile
-            {
-                Id = 3,
-                FullName = "Rahul Verma",
-                JobRole = "Backend Engineer",
-                Experience = "4 years",
-                Bio = "Expert in SQL Server, APIs, and secure data handling with .NET Core.",
-                ProfileImageUrl = "../images/mon.png"
-            }
-        };
-
-            return profiles;
-        }
-
-
-
-        public Profile GetById(int id)
-        {
-            using var conn = new SqlConnection(cc.getConnection());
-            var cmd = new SqlCommand("SELECT * FROM Profiles WHERE Id = @Id", conn);
-            cmd.Parameters.AddWithValue("@Id", id);
-            conn.Open();
-            using var reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                return new Profile
-                {
-                    Id = (int)reader["Id"],
-                    FullName = reader["FullName"].ToString(),
-                    JobRole = reader["JobRole"].ToString(),
-                    Experience = reader["Experience"].ToString(),
-                    Bio = reader["Bio"].ToString(),
-                    ProfileImageUrl = reader["ProfileImageUrl"].ToString()
-                };
-            }
-            return null;
-        }
-
+       
         public void Create(Profile profile)
         {
             using var conn = new SqlConnection(cc.getConnection());

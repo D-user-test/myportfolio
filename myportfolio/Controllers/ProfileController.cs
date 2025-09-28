@@ -111,11 +111,11 @@ namespace myportfolio.Controllers
         //    }
 
         //}
-        private readonly Profile _emailService;
+        private readonly Profile _profile;   // or EmailService
 
-        public ProfileController(Profile emailService)
+        public ProfileController(Profile profile)   // <-- injected here
         {
-            _emailService = emailService;
+            _profile = profile;
         }
 
         [HttpGet]
@@ -129,11 +129,8 @@ namespace myportfolio.Controllers
         public async Task<IActionResult> Contact(string name,string msg,string sub,string email)
         {
 
-            var sent = await _emailService.ProcessedEmail(name, msg, sub, email);
-            if (sent)
-                return Ok("Message sent successfully!");
-            else
-                return StatusCode(500, "Failed to send email.");
+            var sent = await _profile.ProcessedEmail(name, msg, sub, email);
+            return sent ? Ok("Sent!") : StatusCode(500, "Failed to send email");
         }
     }
 
