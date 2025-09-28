@@ -138,22 +138,31 @@ namespace myportfolio.Controllers
                        
                       
                         emailSent =await pf.ProcessedEmail(name, msg, sub, email, servemail);
-                        if (emailSent) { 
-                        
-                            return Json(true);
+                        if (emailSent) {
+
+                            var fromProcess = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Process);
+                            var fromUser = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.User);
+                            var fromMachine = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Machine);
+                            return Json(new { fromProcess = fromProcess, fromUser = fromUser, fromMachine = fromMachine, servemail = servemail });
                         }
                           
                     }
                     
                     catch (Exception e)
                     {
-                        return Json(false);
+                        var fromProcess = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Process);
+                        var fromUser = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.User);
+                        var fromMachine = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Machine);
+                        return Json(new { fromProcess = fromProcess, fromUser = fromUser, fromMachine = fromMachine, servemail = servemail });
                     }
                 }
 
             }
-           
-            return Json(emailSent);
+
+            var fromProcess1 = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Process);
+            var fromUser1 = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.User);
+            var fromMachine1 = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Machine);
+            return Json(new { fromProcess = fromProcess1, fromUser = fromUser1, fromMachine = fromMachine1, servemail = servemail });
         }
     }
 
