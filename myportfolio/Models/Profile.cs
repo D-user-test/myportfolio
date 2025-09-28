@@ -1,6 +1,9 @@
 ﻿using System.Net.Mail;
 using System.Net;
 using Microsoft.AspNetCore.SignalR;
+using System.Text;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace myportfolio.Models
 {
@@ -14,53 +17,47 @@ namespace myportfolio.Models
         public string ProfileImageUrl { get; set; }
         public string emailstatus { get; set; }
 
+        private readonly IConfiguration _config;
+
+        public Profile(IConfiguration config)
+        {
+            _config = config;
+        }
 
 
 
-        public async Task<bool> ProcessedEmail(string name, string mesg, string sub, string email,string servemail,string pword)
+        public async Task<bool> ProcessedEmail(string name, string mesg, string sub, string email)
         {
             try
             {
-                var msg = "";
+                var fromEmail = _config["SENDGRID_FROM_EMAIL"];
+                var toEmail = _config["SENDGRID_TO_EMAIL"];
+                var apiKey = _config["SENDGRID_API_KEY"];
 
-                msg = "<p>Dear Dnyanesh </p>";
-                msg = msg + "<p>You have Recieved New Email Response from your Portfolio. </p><br />";
-                msg = msg + "<p>The Name of the person: <span class='fw-bold'>" +  name + "</span></p>";
-                msg = msg + "<p>Email Id :" + email + "</p>";
-                msg = msg + "<p>Email Subject :" + sub + "</p>";
+                var sb = new StringBuilder();
+                sb.Append("<p>Dear,</p>");
+                sb.Append("<p>You have received a new response from your Portfolio.</p><br />");
+                sb.Append($"<p>The Name of the person: <strong>{name}</strong></p>");
+                sb.Append($"<p>Email Id: {email}</p>");
+                sb.Append($"<p>Email Subject: {sub}</p>");
+                sb.Append($"<p>Message: {mesg}</p><br /><br />");
+                sb.Append("<p>Best Regards</p>");
 
-                msg = msg + "<p> Message: " + mesg + "<br /><br />";
+                var client = new SendGridClient(apiKey);
+                var from = new EmailAddress(fromEmail, "Portfolio");
+                var to = new EmailAddress(toEmail, "Admin");
+                var subject = "New Portfolio Response";
 
-                msg = msg + "<p>Best Regards</p>";
-           
-               
-               
-                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
-                smtpClient.Port = 587;
-                smtpClient.EnableSsl = true;
-                smtpClient.Credentials = new NetworkCredential(servemail, pword);
-                MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress(servemail);
-                mailMessage.To.Add(servemail);
-             
-                mailMessage.IsBodyHtml = true;
-                mailMessage.Subject = "New Portfolio Response";
-                mailMessage.Body = msg;
-                smtpClient.Timeout = 20000;
-                await smtpClient.SendMailAsync(mailMessage).ConfigureAwait(false);
-                //await smtpClient.SendMailAsync(mailMessage);
-               
-                mailMessage.Dispose();
+                var msg = MailHelper.CreateSingleEmail(from, to, subject, sb.ToString(), sb.ToString());
+                var response = await client.SendEmailAsync(msg);
 
-                return true;
+                return response.IsSuccessStatusCode;
             }
-
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Email sending failed: {ex.Message}");
-                throw; // or log to a file/service
+                System.Diagnostics.Debug.WriteLine($"SendGrid email failed: {ex.Message}");
+                return false;
             }
         }
     }
-
 }

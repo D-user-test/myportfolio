@@ -29,10 +29,10 @@ namespace myportfolio.Controllers
         //    }
         //    catch (Exception ex)
         //    {
-              
+
         //        return View(ex);
         //    }
-          
+
         //}
 
         //[HttpGet]
@@ -66,7 +66,7 @@ namespace myportfolio.Controllers
 
         //        return View(ex);
         //    }
-            
+
         //}
 
         //[HttpGet]
@@ -79,7 +79,7 @@ namespace myportfolio.Controllers
         //    {
         //        return View(ex);
         //    }
-           
+
         //}
 
         //[HttpPost]
@@ -94,7 +94,7 @@ namespace myportfolio.Controllers
         //    {
         //        return View(ex);
         //    }
-            
+
         //}
 
         //[HttpGet]
@@ -109,8 +109,15 @@ namespace myportfolio.Controllers
         //    {
         //        return View(ex);
         //    }
-           
+
         //}
+        private readonly Profile _emailService;
+
+        public ProfileController(Profile emailService)
+        {
+            _emailService = emailService;
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -121,39 +128,12 @@ namespace myportfolio.Controllers
         [HttpPost]
         public async Task<IActionResult> Contact(string name,string msg,string sub,string email)
         {
-           
-            Profile pf=new Profile();
-            bool emailSent=true;
-            var servemail = Environment.GetEnvironmentVariable("EMAIL_ID");
-            var pass = Environment.GetEnvironmentVariable("EMAIL_PASSWORD"); 
-            Environment.GetEnvironmentVariable("");
-            if (!string.IsNullOrEmpty(servemail) && servemail != "NA")
-            {
-                string pattern = @"^(?("")(""[^""]+?""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|G:\w])*)(?<=[0-9a-z])@))" +
-                                @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9]{2,17}))$";
-               
-                    try
-                    {
-                       
-                      
-                        emailSent =await pf.ProcessedEmail(name, msg, sub, email, servemail, pass);
-                        if (emailSent) {
 
-                            return Json(emailSent);
-                        }
-                          
-                    }
-                    
-                    catch (Exception e)
-                    {
-                        return Json(false);
-                    }
-                
-
-            }
-
- 
-            return Json(emailSent);
+            var sent = await _emailService.ProcessedEmail(name, msg, sub, email);
+            if (sent)
+                return Ok("Message sent successfully!");
+            else
+                return StatusCode(500, "Failed to send email.");
         }
     }
 

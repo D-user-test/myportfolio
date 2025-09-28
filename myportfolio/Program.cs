@@ -1,3 +1,4 @@
+using myportfolio.Models;
 using myportfolio.Services.ProfileS;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,7 @@ builder.Services.AddSession(options =>
     options.Cookie.MaxAge = TimeSpan.FromMinutes(300);
 });
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+builder.Services.AddTransient<Profile>();
 
 var app = builder.Build();
 
