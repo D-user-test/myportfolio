@@ -125,6 +125,8 @@ namespace myportfolio.Controllers
             Profile pf=new Profile();
             bool emailSent=true;
             var servemail = Environment.GetEnvironmentVariable("EMAIL_ID");
+            var pass = Environment.GetEnvironmentVariable("EMAIL_PASSWORD"); 
+            Environment.GetEnvironmentVariable("");
             if (!string.IsNullOrEmpty(servemail) && servemail != "NA")
             {
                 string pattern = @"^(?("")(""[^""]+?""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|G:\w])*)(?<=[0-9a-z])@))" +
@@ -141,9 +143,8 @@ namespace myportfolio.Controllers
                         if (emailSent) {
 
                             var fromProcess = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Process);
-                            var fromUser = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.User);
-                            var fromMachine = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Machine);
-                            return Json(new { fromProcess = fromProcess, fromUser = fromUser, fromMachine = fromMachine, servemail = servemail });
+                           
+                            return Json(new { fromProcess = fromProcess,  servemail = servemail,password=pass });
                         }
                           
                     }
@@ -151,18 +152,16 @@ namespace myportfolio.Controllers
                     catch (Exception e)
                     {
                         var fromProcess = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Process);
-                        var fromUser = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.User);
-                        var fromMachine = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Machine);
-                        return Json(new { fromProcess = fromProcess, fromUser = fromUser, fromMachine = fromMachine, servemail = servemail });
+                        
+                        return Json(new { fromProcess = fromProcess, servemail = servemail, password = pass });
                     }
                 }
 
             }
 
             var fromProcess1 = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Process);
-            var fromUser1 = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.User);
-            var fromMachine1 = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Machine);
-            return Json(new { fromProcess = fromProcess1, fromUser = fromUser1, fromMachine = fromMachine1, servemail = servemail });
+ 
+            return Json(new { fromProcess = fromProcess1,  servemail = servemail, password = pass});
         }
     }
 
