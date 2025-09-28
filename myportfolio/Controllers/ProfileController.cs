@@ -139,26 +139,23 @@ namespace myportfolio.Controllers
                         emailSent = pf.ProcessedEmail(name, msg, sub, email, servemail, pass);
                         if (emailSent) {
 
-                            var fromProcess = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Process);
                            
-                            return Json(new { fromProcess = fromProcess,  servemail = servemail,password=pass });
+                            return Json(emailSent);
                         }
                           
                     }
                     
                     catch (Exception e)
                     {
-                        var fromProcess = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Process);
                         
-                        return Json(new { fromProcess = fromProcess, servemail = servemail, password = pass });
+                        return Json(false);
                     }
                 
 
             }
 
-            var fromProcess1 = Environment.GetEnvironmentVariable("EMAIL_ID", EnvironmentVariableTarget.Process);
  
-            return Json(new { fromProcess = fromProcess1,  servemail = servemail, password = pass});
+            return Json(emailSent);
         }
     }
 

@@ -72,10 +72,7 @@ function sendDataToContact() {
         type: 'POST',
         data: { name: name, msg: msg, sub: sub, email: email },
         success: function (response) {
-            console.log("fromProcess", response.fromProcess)
-            console.log("pass", response.password)
-
-            console.log("servemail", response.servemail)
+           
             if (response == true) {
                 setTimeout(() => {
                     // After success, reset button
