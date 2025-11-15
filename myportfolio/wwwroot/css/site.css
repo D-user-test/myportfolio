@@ -295,7 +295,7 @@ html {
     }
 
     .section1 {
-        height: 950px;
+        height: 1050px;
     }
 
         /*.section1 img {
@@ -303,7 +303,7 @@ html {
             width: 700px;
         }*/
     .introheight {
-        margin-top: 40px;
+        margin-top: 160px;
     }
 
 }
@@ -313,7 +313,7 @@ html {
         font-size: 14px;
     }
     .introheight {
-        margin-top: 40px;
+        margin-top: 195px;
     }
     .leaddetails {
         font-size: 1rem;
