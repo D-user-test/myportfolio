@@ -14,10 +14,4 @@
     <PackageReference Include="SendGrid" Version="9.29.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Update="wwwroot\resume\Resume.pdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
 </Project>
